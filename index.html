@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Xúc Xắc Tính Điểm Vui Vẻ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #f1c40f;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Khung đăng nhập tài khoản */
+        .auth-section {
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            width: 70%;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background: #27ae60;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn:hover { background: #219653; }
+
+        /* Thông tin người chơi */
+        .user-info {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        #display-score {
+            font-weight: bold;
+            color: #f1c40f;
+        }
+
+        /* Khu vực xúc xắc */
+        .dice-board {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .dice {
+            width: 80px;
+            height: 80px;
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Hiệu ứng lắc */
+        .shaking {
+            animation: shake 0.1s infinite alternate;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(3px, 3px) rotate(0deg); }
+            100% { transform: translate(-3px, -3px) rotate(5deg); }
+        }
+
+        .btn-roll {
+            background: #e74c3c;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-roll:hover { background: #c0392b; }
+
+        .result {
+            margin-top: 25px;
+            font-size: 1.3rem;
+            min-height: 30px;
+            color: #5dade2;
+            font-weight: bold;
+        }
+
+        .rules {
+            font-size: 0.85rem;
+            color: #bdc3c7;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>XÚC XẮC TÍCH ĐIỂM</h1>
+
+    <div class="auth-section" id="auth-box">
+        <input type="text" id="username" placeholder="Nhập tên của bạn..." maxlength="15">
+        <br>
+        <button class="btn" onclick="registerPlayer()">Vào Chơi</button>
+    </div>
+
+    <div class="user-info" id="user-box">
+        <span>Người chơi: <strong id="display-name">...</strong></span>
+        <span id="display-score">1000 Điểm</span>
+    </div>
+
+    <div class="dice-board">
+        <div id="dice1" class="dice">1</div>
+        <div id="dice2" class="dice">1</div>
+    </div>
+
+    <button class="btn btn-roll" onclick="rollDice()">LẮC XÚC XẮC</button>
+
+    <div id="result" class="result">---</div>
+
+    <div class="rules">
+        Luật chơi vui vẻ: Hệ thống tặng bạn 1,000 điểm ban đầu. <br>
+        Tổng số nút 2 xúc xắc từ 8 trở lên: <b>+100 điểm</b>. <br>
+        Tổng số nút từ 7 trở xuống: <b>-100 điểm</b>.
+    </div>
+</div>
+
+<script>
+    // --- KHỞI TẠO ÂM THANH (WEB AUDIO API) ---
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx;
+
+    function initAudio() {
+        if (!audioCtx) {
+            audioCtx = new AudioContext();
+        }
+    }
+
+    // Tạo tiếng cộc khi xúc xắc va chạm
+    function playDiceSound(frequency, duration) {
+        initAudio();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.type = 'triangle'; 
+        oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + duration);
+    }
+
+    // Tiếng rào rào khi lắc trong cốc
+    function playShakeSound() {
+        let count = 0;
+        const interval = setInterval(() => {
+            const randomPitch = 160 + Math.random() * 90;
+            playDiceSound(randomPitch, 0.04);
+            count++;
+            if (count >= 10) clearInterval(interval);
+        }, 50);
+    }
+
+    // --- LOGIC QUẢN LÝ TÀI KHOẢN (LOCALSTORAGE) ---
+    function registerPlayer() {
+        const usernameInput = document.getElementById("username").value.trim();
+        if (!usernameInput) {
+            alert("Vui lòng nhập một cái tên để hệ thống lưu điểm!");
+            return;
+        }
+
+        let playerData = localStorage.getItem(usernameInput);
+
+        if (!playerData) {
+            // Tài khoản mới cấp 1000 điểm ban đầu
+            let newPlayer = { name: usernameInput, score: 1000 };
+            localStorage.setItem(usernameInput, JSON.stringify(newPlayer));
+        }
+
+        sessionStorage.setItem("currentPlayer", usernameInput);
+        showGameUI();
+    }
+
+    function showGameUI() {
+        const currentUsername = sessionStorage.getItem("currentPlayer");
+        if (currentUsername) {
+            document.getElementById("auth-box").style.display = "none";
+            document.getElementById("user-box").style.display = "flex";
+            updateScoreUI();
+        }
+    }
+
+    function updateScoreUI() {
+        const currentUsername = sessionStorage.getItem("currentPlayer");
+        if (currentUsername) {
+            const playerData = JSON.parse(localStorage.getItem(currentUsername));
+            document.getElementById("display-name").innerText = playerData.name;
+            document.getElementById("display-score").innerText = playerData.score + " Điểm";
+        }
+    }
+
+    // --- LOGIC GAME VÀ ĐIỂM SỐ ---
+    let isRolling = false;
+
+    function rollDice() {
+        const currentUsername = sessionStorage.getItem("currentPlayer");
+        if (!currentUsername) {
+            alert("Bạn phải nhập tên ở ô phía trên để đăng ký tài khoản trước khi chơi!");
+            return;
+        }
+
+        if (isRolling) return; // Chặn bấm liên tục khi đang lắc
+        isRolling = true;
+
+        const d1 = document.getElementById('dice1');
+        const d2 = document.getElementById('dice2');
+        const resultDiv = document.getElementById('result');
+        
+        resultDiv.innerText = "Đang lắc...";
+        playShakeSound();
+
+        d1.classList.add('shaking');
+        d2.classList.add('shaking');
+
+        // Hiệu ứng nhảy số ngẫu nhiên ngắt quãng
+        let shuffle = setInterval(() => {
+            d1.innerText = Math.floor(Math.random() * 6) + 1;
+            d2.innerText = Math.floor(Math.random() * 6) + 1;
+        }, 50);
+
+        // Dừng lắc sau 600ms
+        setTimeout(() => {
+            clearInterval(shuffle);
+            d1.classList.remove('shaking');
+            d2.classList.remove('shaking');
+
+            const res1 = Math.floor(Math.random() * 6) + 1;
+            const res2 = Math.floor(Math.random() * 6) + 1;
+            const total = res1 + res2;
+
+            d1.innerText = res1;
+            d2.innerText = res2;
+
+            // Phát âm thanh va chạm lúc dừng rơi
+            playDiceSound(130, 0.2);
+            setTimeout(() => playDiceSound(150, 0.15), 60);
+
+            // Rung máy điện thoại nếu có hỗ trợ
+            if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
+
+            // Tính toán cộng trừ điểm dựa trên luật vui vẻ công bố
+            let playerData = JSON.parse(localStorage.getItem(currentUsername));
+            let scoreChange = 0;
+            let statusText = "";
+
+            if (total >= 8) {
+                scoreChange = 100;
+                playerData.score += scoreChange;
+                statusText = `Chúc mừng! Bạn quay ra ${total} nút (+100 Điểm)`;
+            } else {
+                scoreChange = 100;
+                playerData.score -= scoreChange;
+                statusText = `Rất tiếc! Bạn quay ra ${total} nút (-100 Điểm)`;
+            }
+
+            // Lưu lại điểm mới và cập nhật giao diện
+            localStorage.setItem(currentUsername, JSON.stringify(playerData));
+            updateScoreUI();
+            resultDiv.innerText = statusText;
+
+            isRolling = false;
+        }, 600);
+    }
+
+    // Tự động kiểm tra trạng thái đăng nhập khi tải lại trang (F5)
+    window.onload = function() {
+        showGameUI();
+    };
+</script>
+
+</body>
+</html>
