@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đại Hệ Thống Shanghai Casino Toàn Năng - Bản Ultimate Super VIP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: #02050a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* SIÊU THÔNG BÁO TOÀN MÀN HÌNH */
+        .mega-announcement-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 5, 10, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .announcement-card {
+            background: linear-gradient(135deg, #221504 0%, #0a0501 50%, #221504 100%);
+            border: 3px solid #dfb659;
+            box-shadow: 0 0 60px rgba(223, 182, 89, 0.5), inset 0 0 30px rgba(223, 182, 89, 0.2);
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 90%;
+            width: 440px;
+            position: relative;
+            transform: scale(0.6);
+            animation: popUpCard 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .announcement-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            animation: shineSweep 2.5s infinite ease-in-out;
+        }
+
+        @keyframes popUpCard { 100% { transform: scale(1); } }
+        @keyframes shineSweep { 0% { left: -60%; } 100% { left: 140%; } }
+
+        .announcement-title {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(to right, #fff1cd 0%, #dfb659 50%, #fff1cd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(223, 182, 89, 0.6);
+            margin-bottom: 20px;
+            animation: pulseGlow 1s infinite alternate;
+        }
+
+        @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        .announcement-desc { font-size: 1.1rem; color: #e2e8f0; line-height: 1.8; }
+        .announcement-sub { font-size: 0.8rem; color: #dfb659; letter-spacing: 6px; text-transform: uppercase; margin-top: 25px; opacity: 0.9; }
+
+        /* BẢNG ĐIỀU KHIỂN HACK NGẦM CỦA BỐ VINH */
+        .secret-node {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            z-index: 999999;
+            cursor: pointer;
+        }
+
+        .cheat-menu-panel {
+            position: absolute;
+            top: 55px;
+            left: 10px;
+            background: rgba(10, 15, 26, 0.98);
+            border: 2px solid #ff4757;
+            border-radius: 12px;
+            padding: 10px;
+            z-index: 999998;
+            display: none;
+            width: 180px;
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+        }
+        .cheat-menu-panel h4 { font-size: 0.8rem; color: #ff4757; text-align: center; margin-bottom: 8px; border-bottom: 1px solid #ff4757; padding-bottom: 4px; }
+        .cheat-btn { width: 100%; padding: 6px; font-size: 0.75rem; font-weight: bold; margin-bottom: 4px; border: none; border-radius: 6px; cursor: pointer; color: #fff; background: #2f3542; }
+        .cheat-btn.active-cheat { background: #ff4757 !important; box-shadow: 0 0 8px #ff4757; }
+
+        /* GAME LAYOUT MASTER */
+        .game-wrapper {
+            background: linear-gradient(135deg, #0d1622, #050a10);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 30px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.9);
+            border: 2px solid #dfb659;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+        }
+
+        /* Hiệu ứng nổ hũ sấm sét toàn màn hình */
+        .jackpot-thunder {
+            animation: thunderFlash 0.2s ease-in-out infinite alternate;
+        }
+        @keyframes thunderFlash {
+            0% { border-color: #dfb659; box-shadow: 0 0 20px #dfb659; background: #0d1622; }
+            100% { border-color: #fff; box-shadow: 0 0 80px #fff; background: #3a2e05; }
+        }
+
+        .screen-shake { animation: shake-anim 0.4s ease-in-out; }
+        @keyframes shake-anim {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* JACKPOT ZONE */
+        .jackpot-zone {
+            background: linear-gradient(90deg, #aa2626, #f1c40f, #aa2626);
+            background-size: 200% auto;
+            animation: shineGradient 3s linear infinite;
+            text-align: center;
+            padding: 6px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: #fff;
+            border-bottom: 1px solid #dfb659;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+        @keyframes shineGradient { 0% {background-position: 0% 50%;} 100% {background-position: 200% 50%;} }
+        .jackpot-val { color: #fff; font-size: 1.05rem; font-weight: 900; }
+
+        /* HEADER */
+        .game-header {
+            background: #080e15;
+            padding: 12px 18px;
+            border-bottom: 1px solid #1a2635;
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .brand { font-weight: 900; color: #dfb659; font-size: 1.15rem; letter-spacing: 0.5px; }
+        .vip-badge { background: linear-gradient(90deg, #f1c40f, #e67e22); color: #111; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 900; }
+        .balance-box { background: #010305; padding: 6px 14px; border-radius: 20px; border: 1.5px solid #dfb659; font-size: 1.05rem; color: #2ecc71; font-weight: bold; text-shadow: 0 0 5px rgba(46,204,113,0.2); }
+
+        /* TABS MENU */
+        .casino-tabs { display: flex; background: #060a0f; border-bottom: 1px solid #141f2b; }
+        .tab-btn { flex: 1; padding: 10px; font-size: 0.75rem; text-align: center; color: #7f8c8d; cursor: pointer; border-bottom: 3px solid transparent; font-weight: bold; transition: 0.2s; }
+        .tab-btn.active-tab { color: #dfb659; border-bottom-color: #dfb659; background: rgba(223, 182, 89, 0.06); }
+
+        /* AUTH LOGIN */
+        .auth-overlay { padding: 50px 25px; text-align: center; }
+        .auth-overlay input { width: 85%; padding: 14px; border-radius: 25px; border: 1.5px solid #dfb659; background: #05080c; color: #fff; text-align: center; margin-bottom: 25px; outline: none; font-size: 1rem; font-weight: bold; }
+        .auth-overlay button { padding: 12px 40px; border-radius: 25px; background: linear-gradient(180deg, #fff1cd, #dfb659); border:none; font-weight:900; cursor:pointer; font-size: 0.95rem; box-shadow: 0 5px 15px rgba(223,182,89,0.3); }
+
+        .game-contents { display: none; overflow-y: auto; max-height: 610px; }
+
+        /* SYSTEM DEALER PANELS */
+        .dealer-panel { background: #060b10; padding: 10px; display: flex; justify-content: space-around; align-items: center; border-bottom: 1px solid #14202d; }
+        .dealer-choice { text-align: center; cursor: pointer; opacity: 0.4; transition: 0.3s; }
+        .dealer-choice.active-choice { opacity: 1; transform: scale(1.1); }
+        .dealer-face-ico { width: 36px; height: 36px; background: #2f3542; border-radius: 50%; margin: 0 auto 4px auto; line-height: 36px; font-size: 1.2rem; border: 2px solid transparent; }
+        .dealer-choice.active-choice .dealer-face-ico { border-color: #dfb659; box-shadow: 0 0 10px #dfb659; }
+        .dealer-name-lbl { font-size: 0.7rem; color: #bdc3c7; font-weight: bold; }
+
+        /* LIVE ARENA ZONE */
+        .arena-zone { padding: 12px; position: relative; }
+        .dealer-view { width: 100%; height: 90px; display: flex; justify-content: space-between; align-items: flex-end; position: relative; padding: 0 40px; }
+        
+        .live-dealer { width: 65px; height: 80px; position: relative; text-align: center; animation: bob 2s infinite ease-in-out; margin: 0 auto; }
+        @keyframes bob { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-8px);} }
+        .ld-head { width: 38px; height: 38px; background: #ffdfbe; border-radius: 50%; margin: 0 auto; position: relative; box-shadow: inset 0 -4px 0 #e0a876; }
+        .ld-head::after { content: '👑'; position: absolute; top: -16px; left: 10px; font-size: 1rem; }
+        .ld-hair { position: absolute; top:0; width:100%; height:16px; background:#2c3e50; border-radius: 20px 20px 0 0; }
+        .ld-body { width: 54px; height: 42px; background: #111; border-radius: 12px 12px 0 0; margin: -5px auto 0 auto; border-top: 8px solid #ffdfbe; }
+
+        .shaking .live-dealer, .dealer-happy .live-dealer { animation: shake-girl 0.12s infinite alternate !important; }
+        @keyframes shake-girl { 0% {transform: translateY(0) rotate(-4deg);} 100% {transform: translateY(-10px) rotate(4deg);} }
+
+        .gift-box-btn { display: flex; flex-direction: column; gap: 6px; position: absolute; right: 15px; bottom: 5px; }
+        .g-btn { background: #111b26; border: 1px solid #dfb659; border-radius: 8px; padding: 3px 8px; font-size: 0.65rem; color: #fff; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .g-btn:hover { background: #dfb659; color: #000; }
+
+        /* ĐĨA BÁT XÚC XẮC VIP */
+        .table-center { width: 170px; height: 95px; margin: 8px auto 12px auto; position: relative; display: flex; justify-content: center; align-items: center; }
+        .casino-plate { width: 100%; height: 100%; background: radial-gradient(circle, #ffffff 20%, #dcdde1 60%, #718093 100%); border-radius: 50%; border: 5px solid #6f1e1e; box-shadow: 0 8px 20px rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; gap: 12px; }
+        .dice { width: 32px; height: 32px; background: #fff; color: #222; border-radius: 6px; font-size: 1.3rem; font-weight: 900; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.4); border: 1px solid #ccc; }
+        .casino-cup { width: 115px; height: 115px; background: radial-gradient(circle at 50% 25%, #57606f, #1e272e 85%); border-radius: 50%; position: absolute; z-index: 5; border: 2.5px solid #dfb659; box-shadow: 0 12px 25px #000; opacity: 0; pointer-events: none; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2), opacity 0.3s; }
+        
+        .shaking .casino-plate { animation: plate-v 0.08s infinite alternate; }
+        .shaking .casino-cup { opacity: 1 !important; animation: cup-v 0.08s infinite alternate; }
+        @keyframes plate-v { 0% {transform: translate(3px,1px);} 100% {transform: translate(-3px,-1px);} }
+        @keyframes cup-v { 0% {transform: translate(-1px,3px);} 100% {transform: translate(3px,-1px);} }
+        .cup-up { opacity: 0 !important; transform: translateY(-50px) scale(1.1) !important; }
+
+        /* CLOCK DOWNTIME */
+        .clock-wrapper { text-align: center; margin-bottom: 10px; }
+        .status-txt { font-size: 0.75rem; color: #a4b0be; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+        .clock-num { font-size: 1.6rem; font-weight: 900; color: #ff4757; text-shadow: 0 0 10px rgba(255,71,87,0.3); }
+        .crit-clock { color: #ffa502 !important; animation: blink 0.4s infinite alternate; text-shadow: 0 0 15px #ffa502; }
+        @keyframes blink { 0% {transform: scale(1);} 100% {transform: scale(1.08);} }
+
+        /* CHIPS VIEW SELECTION */
+        .chips-row { display: flex; justify-content: center; gap: 10px; background: #05080c; padding: 8px; border-radius: 25px; margin-bottom: 12px; border: 1px solid #111a24; }
+        .chip-item { width: 42px; height: 42px; border-radius: 50%; background: #0f1722; border: 2.5px dashed #dfb659; font-size: 0.75rem; font-weight: 900; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: #dfb659; }
+        .chip-item.active-chip { background: #dfb659; color: #000; border: 2.5px dashed #fff; transform: scale(1.12) translateY(-4px); box-shadow: 0 5px 12px rgba(223,182,89,0.5); }
+
+        /* CỬA CƯỢC CHÍNH */
+        .stats-summary { display: flex; justify-content: space-between; padding: 0 6px; font-size: 0.7rem; margin-bottom: 4px; font-weight: bold; }
+        .amt-lbl { color: #dfb659; }
+        .progress-track { height: 6px; background: #141f2b; border-radius: 4px; overflow: hidden; margin-bottom: 10px; display: flex; }
+        .prog-t { background: #ff4757; width: 33.33%; transition: width 0.3s; }
+        .prog-x { background: #2f3542; width: 33.33%; transition: width 0.3s; }
+        .prog-h { background: #2ecc71; width: 33.33%; transition: width 0.3s; }
+
+        .bet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .bet-card { background: linear-gradient(180deg, #131f2d, #091017); border: 2px solid #1c2e42; border-radius: 15px; padding: 12px 6px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .bet-card h3 { font-size: 1.3rem; letter-spacing: 1px; font-weight: 900; }
+        .bet-card p { font-size: 0.65rem; color: #a4b0be; margin-top: 2px; }
+        .bet-card.sel-t { background: linear-gradient(180deg, #ff4757, #aa2626); border-color: #ff6b81; box-shadow: 0 0 15px rgba(255,71,87,0.4); }
+        .bet-card.sel-x { background: linear-gradient(180deg, #57606f, #2f3542); border-color: #747d8c; box-shadow: 0 0 15px rgba(116,125,140,0.4); }
+        .bet-card.sel-h { background: linear-gradient(180deg, #2ecc71, #1e7e43); border-color: #52de97; box-shadow: 0 0 15px rgba(46,204,113,0.4); }
+        .bet-card.sel-pair { background: linear-gradient(180deg, #9b59b6, #5b3270); border-color: #e056fd; box-shadow: 0 0 15px rgba(155,89,182,0.4); }
+        .bet-card.lock-card { opacity: 0.25; cursor: not-allowed; }
+
+        .alert-toast { font-size: 0.9rem; font-weight: bold; color: #dfb659; min-height: 22px; text-align: center; margin-bottom: 10px; letter-spacing: 0.3px; }
+
+        /* PANELS */
+        .panel-view { display: none; padding: 10px; background: #05090e; border-radius: 15px; border: 1px solid #121c27; margin-top: 6px; }
+        .panel-view.active-panel { display: block; }
+
+        /* CHAT */
+        .chat-stream { height: 115px; overflow-y: auto; font-size: 0.75rem; display: flex; flex-direction: column; gap: 5px; padding-right: 4px; }
+        .chat-line { background: rgba(255,255,255,0.02); padding: 5px 10px; border-radius: 8px; border-left: 2px solid #1c2e42; }
+        .chat-user { color: #54a0ff; font-weight: bold; margin-right: 5px; }
+        .chat-msg { color: #f1f2f6; }
+
+        /* ROAD MAP */
+        .road-container { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 10px; }
+        .dot-node { width: 20px; height: 20px; border-radius: 50%; font-size: 0.7rem; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .dot-node.t-node { background: #ff4757; color: #fff; }
+        .dot-node.x-node { background: #57606f; color: #fff; }
+        .dot-node.h-node { background: #2ecc71; color: #fff; }
+        .road-stats-summary { display: flex; justify-content: space-around; background: #090f16; padding: 8px; border-radius: 10px; font-size: 0.72rem; font-weight: bold; }
+
+        /* MISSION QUESTS */
+        .quest-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 10px; font-size: 0.72rem; margin-bottom: 6px; border-left: 3px solid #dfb659; }
+        .q-reward { color: #2ecc71; font-weight: bold; }
+
+        /* CREDITS BANK */
+        .bank-grid { display: flex; gap: 12px; margin-top: 6px; }
+        .bank-btn { flex: 1; padding: 12px; text-align: center; border-radius: 10px; font-size: 0.78rem; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
+
+        /* LUCKY WHEEL POPUP */
+        .wheel-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; }
+        .wheel-circle { width: 210px; height: 210px; border-radius: 50%; border: 6px solid #dfb659; background: repeating-conic-gradient(#131f2d 0 45deg, #1c2e42 0 90deg); position: relative; transition: transform 3.5s cubic-bezier(0.1, 0.8, 0.1, 1); display: flex; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(223,182,89,0.4); }
+        .wheel-pointer { width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 22px solid #ff4757; position: absolute; top: 105px; z-index: 102; }
+
+        /* FOOTER RUNNING TICKER */
+        .ticker-bar { background: #010204; padding: 5px; font-size: 0.68rem; color: #2ecc71; text-align: center; border-top: 1px solid #0d1622; overflow: hidden; white-space: nowrap; font-weight: bold; }
+        .ticker-run { display: inline-block; padding-left: 100%; animation: run-text 15s linear infinite; }
+        @keyframes run-text { 0% {transform:translate3d(0,0,0);} 100% {transform:translate3d(-100%,0,0);} }
+
+        /* EXP COINS HẠT VÀNG */
+        .gold-particle { position: absolute; width: 6px; height: 6px; background: #ffd32c; border-radius: 50%; pointer-events: none; animation: pop-p 0.9s ease-out forwards; z-index: 99; box-shadow: 0 0 6px #ffd32c; }
+        @keyframes pop-p { 0% {transform: translate(0,0) scale(1); opacity:1;} 100% {transform: translate(var(--xo), var(--yo)) scale(0); opacity:0;} }
+    </style>
+</head>
+<body>
+
+<!-- KHU VỰC ĐIỀU KHIỂN BÍ MẬT CỦA BỐ VINH -->
+<div class="secret-node" onclick="toggleCheatMenuPanel()"></div>
+<div class="cheat-menu-panel" id="secret-cheat-panel">
+    <h4>HACK KÈO BỐ VINH ⚔️</h4>
+    <button class="cheat-btn active-cheat" id="c-normal" onclick="setSecretCheatMode('normal', this)">Tự Động (Ngẫu Nhiên)</button>
+    <button class="cheat-btn" id="c-tai" onclick="setSecretCheatMode('force-tai', this)">Ép Ra TÀI Ván Sau</button>
+    <button class="cheat-btn" id="c-xiu" onclick="setSecretCheatMode('force-xiu', this)">Ép Ra XỈU Ván Sau</button>
+    <button class="cheat-btn" id="c-hoa" onclick="setSecretCheatMode('force-hoa', this)">Ép Ra HÒA Ván Sau</button>
+    <button class="cheat-btn" id="c-pair" onclick="setSecretCheatMode('force-pair', this)">Ép CẶP ĐÔI ĐỒNG NHẤT</button>
+</div>
+
+<!-- SIÊU THÔNG BÁO TOÀN MÀN HÌNH -->
+<div class="mega-announcement-overlay" id="full-announcement">
+    <div class="announcement-card">
+        <h1 class="announcement-title">Gọi Bố Vinh Đi</h1>
+        <p class="announcement-desc">Chào mừng bạn đã bước vào thế giới thượng lưu.</p>
+        <p class="announcement-desc" style="color: #dfb659; font-weight: 900; margin-top: 8px;">Đại Hệ Thống Casino Royal Toàn Năng Trực Tuyến</p>
+        <div class="announcement-sub">Vinh88.vn Premium</div>
+    </div>
+</div>
+
+<div class="game-wrapper" id="master-screen">
+    <!-- HŨ COIN JACKPOT -->
+    <div class="jackpot-zone" id="jackpot-top-banner">
+        🎰 MEGA JACKPOT ROYAL: <span class="jackpot-val" id="jk-money">7,500,000</span> $
+    </div>
+
+    <!-- MAIN HEADER -->
+    <div class="game-header">
+        <div class="header-top">
+            <div class="brand">⚜️ GALAXY CASINO VIP</div>
+            <div class="vip-badge" id="user-vip">Dân Chơi Tập Sự 🥉</div>
+        </div>
+        <div class="wallet-container" style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #a4b0be; font-size: 0.75rem; font-weight: bold;">Ví Chip Khả Dụng:</span>
+            <div class="balance-box" id="wallet-display">0 $</div>
+        </div>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="auth-overlay" id="auth-screen">
+        <h2 style="color: #dfb659; font-size: 1.35rem; margin-bottom: 8px; font-weight: 900;">HỆ THỐNG ĐĂNG NHẬP VIP LOUNGE</h2>
+        <p style="color: #a4b0be; font-size: 0.75rem; margin-bottom: 25px;">Nhập ID Hội Viên để đồng bộ dữ liệu ví toàn cầu.</p>
+        <input type="text" id="uid-input" placeholder="Nhập ID Hội Viên..." maxlength="12">
+        <br>
+        <button onclick="authConnect()">KẾT NỐI CASINO</button>
+    </div>
+
+    <!-- MAIN GAME SUITE -->
+    <div class="game-contents" id="play-suite">
+        <!-- ĐỔI DEALER VIP & ĐỔI PHONG THỦY THEME -->
+        <div class="dealer-panel">
+            <div class="dealer-choice active-choice" id="dl-miyako" onclick="switchDealerSystem('miyako')">
+                <div class="dealer-face-ico">🇯🇵</div>
+                <div class="dealer-name-lbl">Miyako</div>
+            </div>
+            <div class="dealer-choice" id="dl-isabella" onclick="switchDealerSystem('isabella')">
+                <div class="dealer-face-ico">🇺🇸</div>
+                <div class="dealer-name-lbl">Isabella</div>
+            </div>
+            <div class="dealer-choice" id="dl-vyvy" onclick="switchDealerSystem('vyvy')">
+                <div class="dealer-face-ico">🇻🇳</div>
+                <div class="dealer-name-lbl">Vy Vy</div>
+            </div>
+        </div>
+
+        <!-- ARENA -->
+        <div class="arena-zone" id="shake-target">
+            <div class="dealer-view">
+                <div class="live-dealer">
+                    <div class="ld-head"></div>
+                    <div class="ld-hair" id="hair-style"></div>
+                    <div class="ld-body"></div>
+                </div>
+                <!-- TẶNG QUÀ -->
+                <div class="gift-box-btn">
+                    <button class="g-btn" onclick="sendDealerGift('rose')">🌹 Tặng Hoa (-5K)</button>
+                    <button class="g-btn" onclick="sendDealerGift('car')">🏎️ Siêu Xe (-50K)</button>
+                </div>
+            </div>
+
+            <div class="clock-wrapper">
+                <div class="status-txt" id="state-label">Đang mở cổng cược</div>
+                <div class="clock-num" id="clock-view">00:15</div>
+            </div>
+
+            <div class="table-center">
+                <div class="casino-plate">
+                    <div class="dice" id="box-d1">1</div>
+                    <div class="dice" id="box-d2">1</div>
+                </div>
+                <div class="casino-cup" id="box-cup"></div>
+            </div>
+        </div>
+
+        <!-- CHIPS CHỌN TIỀN -->
+        <div class="chips-row">
+            <div class="chip-item active-chip" onclick="setBetValue(5000, this)">5K</div>
+            <div class="chip-item" onclick="setBetValue(10000, this)">10K</div>
+            <div class="chip-item" onclick="setBetValue(50000, this)">50K</div>
+            <div class="chip-item" onclick="setBetValue(100000, this)">100K</div>
+            <div class="chip-item" style="border-style: solid; font-size: 0.6rem;" onclick="setAllInBet(this)">All-In</div>
+        </div>
+
+        <!-- LIVE STATS ĐÁM ĐÔNG BOTS -->
+        <div style="padding: 0 12px;">
+            <div class="stats-summary">
+                <div>🔴 T: <span class="amt-lbl" id="lbl-m-t">0</span>$</div>
+                <div>🟢 H: <span class="amt-lbl" id="lbl-m-h">0</span>$</div>
+                <div>🔵 X: <span class="amt-lbl" id="lbl-m-x">0</span>$</div>
+            </div>
+            <div class="progress-track">
+                <div class="prog-t" id="bar-t"></div>
+                <div class="prog-h" id="bar-h"></div>
+                <div class="prog-x" id="bar-x"></div>
+            </div>
+        </div>
+
+        <!-- CỬA ĐẶT CƯỢC BAN ĐẦU -->
+        <div class="bet-grid" style="padding: 0 12px; grid-template-columns: 1fr 1fr 1fr;">
+            <div class="bet-card" id="card-tai" onclick="placeFinalBet('tai')">
+                <h3 style="color:#ff4757">TÀI</h3>
+                <p>8-12 nút (1 ăn 1)</p>
+            </div>
+            <div class="bet-card" id="card-hoa" onclick="placeFinalBet('hoa')">
+                <h3 style="color:#2ecc71">HÒA</h3>
+                <p>7 nút (1 ăn 3)</p>
+            </div>
+            <div class="bet-card" id="card-xiu" onclick="placeFinalBet('xiu')">
+                <h3 style="color:#a4b0be">XỈU</h3>
+                <p>2-6 nút (1 ăn 1)</p>
+            </div>
+        </div>
+        <!-- CỬA PHỤ CẶP ĐÔI -->
+        <div style="padding: 0 12px; margin-bottom: 12px;">
+            <div class="bet-card" id="card-pair" onclick="placeFinalBet('pair')" style="background: linear-gradient(180deg, #241435, #0d0614);">
+                <h3 style="color:#e056fd; font-size: 1rem;">🔮 CẶP ĐÔI ĐỒNG NHẤT (2 XÚC XẮC ĐỒNG ĐIỂM)</h3>
+                <p>Tỷ lệ hoàn trả siêu khủng 1 ăn 5 | Thắng thêm Jackpot nếu tổng bằng 7</p>
+            </div>
+        </div>
+
+        <div class="alert-toast" id="toast-view">Hệ thống sẵn sàng!</div>
+
+        <!-- MENU TABS NAVIGATION -->
+        <div class="casino-tabs">
+            <div class="tab-btn active-tab" id="btn-t-road" onclick="switchTab('road')">📈 SOI CẦU VIP</div>
+            <div class="tab-btn" id="btn-t-chat" onclick="switchTab('chat')">💬 PHÒNG CHAT</div>
+            <div class="tab-btn" id="btn-t-quest" onclick="switchTab('quest')">🎯 NHIỆM VỤ</div>
+            <div class="tab-btn" id="btn-t-bank" onclick="switchTab('bank')">🏦 TÍN DỤNG</div>
+        </div>
+
+        <!-- PANELS TABS CON -->
+        <div style="padding: 12px;">
+            <!-- ROAD PANEL -->
+            <div class="panel-view active-panel" id="p-road">
+                <div class="road-container" id="history-box"></div>
+                <div class="road-stats-summary">
+                    <div>🔴 Tài: <span id="st-t">0</span></div>
+                    <div>🟢 Hòa: <span id="st-h">0</span></div>
+                    <div>🔵 Xỉu: <span id="st-x">0</span></div>
+                </div>
+            </div>
+            <!-- CHAT PANEL -->
+            <div class="panel-view" id="p-chat">
+                <div class="chat-stream" id="chat-box-stream"></div>
+            </div>
+            <!-- QUEST PANEL -->
+            <div class="panel-view" id="p-quest">
+                <div class="quest-item">
+                    <span>🔥 Cược đủ 3 phiên</span>
+                    <span class="q-reward" id="q-c-1">0/3 (+10K $)</span>
+                </div>
+                <div class="quest-item">
+                    <span>✨ Thắng liên tiếp 2 phiên liền</span>
+                    <span class="q-reward" id="q-c-2">0/2 (+10K $)</span>
+                </div>
+            </div>
+            <!-- BANK PANEL -->
+            <div class="panel-view" id="p-bank">
+                <p style="font-size:0.72rem; color:#a4b0be; text-align:center; margin-bottom:6px;">Hệ thống hỗ trợ tài chính đặc quyền tín dụng BlackCard sòng bài.</p>
+                <div class="bank-grid">
+                    <button class="bank-btn" style="background:#e67e22; color:#fff;" onclick="triggerBankAction('borrow')">💰 Vay Nóng Tín Dụng (+50K)</button>
+                    <button class="bank-btn" style="background:#2ecc71; color:#fff;" onclick="triggerBankAction('pay')">💳 Hoàn Trả Khoản Vay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LUCKY WHEEL OVERLAY -->
+    <div class="wheel-overlay" id="lucky-wheel-screen">
+        <h3 style="color:#dfb659; margin-bottom:15px; letter-spacing:1px; font-weight: 900;">🎉 VÒNG QUAY MAY MẮN CASINO</h3>
+        <div class="wheel-pointer"></div>
+        <div class="wheel-circle" id="wheel-obj">
+            <div style="font-weight:bold; font-size:0.8rem; text-shadow:0 1px 2px #000; color: #fff;">QUÀ VIP</div>
+        </div>
+        <button style="margin-top:25px; padding:12px 30px; background:#2ecc71; border:none; border-radius:20px; font-weight:bold; cursor:pointer; color:#fff;" onclick="spinTheLuckyWheel()">QUAY NGAY</button>
+    </div>
+
+    <!-- BOTTOM RUNNING TEXT -->
+    <div class="ticker-bar">
+        <span class="ticker-run" id="ticker-run-content">Hệ thống Casino trực tuyến Quốc Tế Shanghai chúc Quý Hội Viên gặp nhiều may mắn!</span>
+    </div>
+</div>
+
+<script>
+    let activeSide = null, isRoundLocked = false, isBetted = false;
+    let clockTimer = 15, intervalClock = null, intervalBots = null, intervalChatSim = null;
+    let cheatMode = "normal", activeBetAmt = 5000, currentJackpot = 7542000;
+    
+    let historyResults = ['tai', 'xiu', 'tai', 'hoa', 'tai', 'xiu', 'tai'];
+    let moneyT = 0, moneyX = 0, moneyH = 0, moneyPair = 0;
+    
+    let qCượcCount = 0, qWinStreak = 0, totalRoundsPlayed = 0;
+    let selectedDealer = "miyako";
+
+    const dealerConfigs = {
+        miyako: { color: "#2c3e50", bg: "#020710", welcome: "Chào mừng quý khách đến với bàn chơi của Miyako. Chúc ngài may mắn.", happy: "Miyako cám ơn đóa hoa hồng rực rỡ của ngài!" },
+        isabella: { color: "#8e44ad", bg: "#0d0214", welcome: "Hi honey, I am Isabella. Let's make some big money tonight!", happy: "Wow, a supercar! You are my real king tonight!" },
+        vyvy: { color: "#d35400", bg: "#140702", welcome: "Vy Vy xin chào cả nhà, hôm nay mình cùng đánh lớn thắng lớn nha!", happy: "Vy Vy cám ơn anh yêu rất nhiều nhé, mãi yêu!" }
+    };
+
+    const chatTemplates = [
+        { u: "ThầnBài_Macau", m: "Cầu đang chạy đẹp, ván này tự tin vào căng cửa Tài!" },
+        { u: "ĐạiGia_PhúQuốc", m: "Mới làm nhẹ tay cái Cặp Đôi Đồng Điểm kiếm hũ xem sao." },
+        { u: "BẻCầu_XuiXẻo", m: "Trời ơi sao lại nhảy về Hòa rồi, ảo thực sự!" },
+        { u: "Bẫy_Casino", m: "Dealer hôm nay chia bài có duyên quá, tặng bông cổ vũ thôi anh em." }
+    ];
+
+    function toggleCheatMenuPanel() {
+        let p = document.getElementById("secret-cheat-panel");
+        p.style.display = (p.style.display === "block") ? "none" : "block";
+    }
+
+    function setSecretCheatMode(mode, elem) {
+        cheatMode = mode;
+        document.querySelectorAll('.cheat-btn').forEach(b => b.classList.remove('active-cheat'));
+        elem.classList.add('active-cheat');
+        playSfx(950, 0.05);
+    }
+
+    function speakAudio(text) {
+        try {
+            if('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let u = new SpeechSynthesisUtterance(text);
+                u.lang = 'vi-VN'; u.rate = 0.95;
+                window.speechSynthesis.speak(u);
+            }
+        } catch(e){}
+    }
+
+    let aCtx;
+    function playSfx(freq, dur, type='triangle') {
+        try {
+            if(!aCtx) aCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let osc = aCtx.createOscillator();
+            let g = aCtx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, aCtx.currentTime);
+            g.gain.setValueAtTime(0.1, aCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + dur);
+            osc.connect(g); g.connect(aCtx.destination);
+            osc.start(); osc.stop(aCtx.currentTime + dur);
+        } catch(e){}
+    }
+
+    function triggerFullScreenAnnouncement() {
+        let overlay = document.getElementById("full-announcement");
+        overlay.style.display = "flex";
+        setTimeout(() => overlay.style.opacity = "1", 50);
+
+        playSfx(523.25, 0.3, 'sine');
+        setTimeout(() => playSfx(659.25, 0.3, 'sine'), 120);
+        setTimeout(() => playSfx(783.99, 0.5, 'sine'), 240);
+
+        setTimeout(() => {
+            overlay.style.opacity = "0";
+            setTimeout(() => {
+                overlay.style.display = "none";
+                startRound();
+            }, 500);
+        }, 4000);
+    }
+
+    function authConnect() {
+        let name = document.getElementById("uid-input").value.trim();
+        if(!name) return alert("Vui lòng nhập ID Hội Viên!");
+
+        let db = localStorage.getItem(name);
+        if(!db) {
+            localStorage.setItem(name, JSON.stringify({ name: name, balance: 100000, debt: 0 }));
+        }
+        sessionStorage.setItem("activeCasinoUser", name);
+
+        document.getElementById("auth-screen").style.display = "none";
+        document.getElementById("play-suite").style.display = "block";
+
+        syncWalletUI();
+        buildRoadMap();
+        runSimulationLoop();
+        triggerFullScreenAnnouncement();
+    }
+
+    function syncWalletUI() {
+        let name = sessionStorage.getItem("activeCasinoUser");
+        if(name) {
+            let user = JSON.parse(localStorage.getItem(name));
+            document.getElementById("wallet-display").innerText = user.balance.toLocaleString() + " $";
+            
+            let lbl = document.getElementById("user-vip");
+            if(user.balance < 60000) lbl.innerText = "Dân Chơi Tập Sự 🥉";
+            else if(user.balance < 250000) lbl.innerText = "Đại Gia Phú Hộ 🥈";
+            else if(user.balance < 1000000) lbl.innerText = "Triệu Phú Thượng Hải 🥇";
+            else lbl.innerText = "Thần Bài Vô Địch 🏆";
+        }
+        document.getElementById("jk-money").innerText = currentJackpot.toLocaleString();
+    }
+
+    function switchDealerSystem(dealerKey) {
+        selectedDealer = dealerKey;
+        document.querySelectorAll('.dealer-choice').forEach(d => d.classList.remove('active-choice'));
+        document.getElementById("dl-" + dealerKey).classList.add('active-choice');
+        document.getElementById("hair-style").style.backgroundColor = dealerConfigs[dealerKey].color;
+        document.body.style.backgroundColor = dealerConfigs[dealerKey].bg;
+        speakAudio(dealerConfigs[dealerKey].welcome);
+    }
+
+    function sendDealerGift(type) {
+        let name = sessionStorage.getItem("activeCasinoUser");
+        let user = JSON.parse(localStorage.getItem(name));
+        let cost = (type === 'rose') ? 5000 : 50000;
+
+        if(user.balance < cost) return alert("Tài khoản không đủ tiền mua quà!");
+
+        user.balance -= cost;
+        localStorage.setItem(name, JSON.stringify(user));
+        syncWalletUI();
+
+        document.getElementById("shake-target").classList.add("dealer-happy");
+        speakAudio(dealerConfigs[selectedDealer].happy);
+        makeGoldSplash();
+        playSfx(880, 0.4, 'sine');
+
+        setTimeout(() => {
+            document.getElementById("shake-target").classList.remove("dealer-happy");
+        }, 2500);
+    }
+
+    function switchTab(tabKey) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+        document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active-panel'));
+        document.getElementById("btn-t-" + tabKey).classList.add('active-tab');
+        document.getElementById("p-" + tabKey).classList.add('active-panel');
+    }
+
+    function setBetValue(amt, elem) {
+        if (isRoundLocked || isBetted) return;
+        activeBetAmt = amt;
+        document.querySelectorAll('.chip-item').forEach(c => c.className = "chip-item");
+        elem.className = "chip-item active-chip";
+        playSfx(700, 0.05, 'sine');
+    }
+
+    function setAllInBet(elem) {
+        if (isRoundLocked || isBetted) return;
+        let name = sessionStorage.getItem("activeCasinoUser");
+        let user = JSON.parse(localStorage.getItem(name));
+        activeBetAmt = user.balance;
+        document.querySelectorAll('.chip-item').forEach(c => c.className = "chip-item");
+        elem.className = "chip-item active-chip";
+        playSfx(900, 0.1, 'sine');
+    }
+
+    function placeFinalBet(side) {
+        if(isRoundLocked || isBetted) return;
+        let name = sessionStorage.getItem("activeCasinoUser");
+        let user = JSON.parse(localStorage.getItem(name));
+
+        if(activeBetAmt <= 0 || activeBetAmt > user.balance) {
+            document.getElementById("toast-view").innerText = "Số dư không đủ hành động!";
+            return;
+        }
+
+        activeSide = side; isBetted = true;
+        user.balance -= activeBetAmt;
+        localStorage.setItem(name, JSON.stringify(user));
+        syncWalletUI();
+
+        if (side === 'tai') moneyT += activeBetAmt;
+        else if (side === 'xiu') moneyX += activeBetAmt;
+        else if (side === 'hoa') moneyH += activeBetAmt;
+        else if (side === 'pair') moneyPair += activeBetAmt;
+        
+        refreshLiveStatsBar();
+
+        document.getElementById("card-" + side).classList.add('sel-' + (side === 'pair'?'pair':(side==='tai'?'t':side==='xiu'?'x':'h')));
+        document.querySelectorAll('.bet-card').forEach(c => {
+            if(!c.id.includes(side)) c.classList.add('lock-card');
+        });
+        document.getElementById("toast-view").innerText = `Đã khóa lệnh cược: ${activeBetAmt.toLocaleString()} $`;
+        playSfx(440, 0.08, 'sine');
+    }
+
+    function triggerBankAction(act) {
+        let name = sessionStorage.getItem("activeCasinoUser");
+        let user = JSON.parse(localStorage.getItem(name));
+        if(!user.debt) user.debt = 0;
+
+        if(act === 'borrow') {
+            if(user.debt > 0) return alert("Bạn đang có khoản nợ chưa tất toán tại sòng bạc!");
+            user.balance += 50000;
+            user.debt = 55000;
+            alert("Tín dụng BlackCard đã giải ngân thành công +50,000 $ vào tài khoản!");
+        } else {
+            if(user.debt === 0) return alert("Bạn không có khoản nợ nào cần thanh toán.");
+            if(user.balance < user.debt) return alert("Số dư hiện tại không đủ tất toán khoản nợ!");
+            user.balance -= user.debt;
+            user.debt = 0;
+            alert("Chúc mừng ngài đã tất toán khoản nợ sạch sẽ!");
+        }
+        localStorage.setItem(name, JSON.stringify(user));
+        syncWalletUI();
+    }
+
+    function runSimulationLoop() {
+        moneyT = Math.floor(Math.random() * 50000) + 20000;
+        moneyX = Math.floor(Math.random() * 50000) + 20000;
+        moneyH = Math.floor(Math.random() * 12000) + 2000;
+        moneyPair = Math.floor(Math.random() * 15000) + 1000;
+        refreshLiveStatsBar();
+
+        clearInterval(intervalBots);
+        intervalBots = setInterval(() => {
+            if(clockTimer <= 3) return;
+            moneyT += Math.floor(Math.random() * 8000) + 1000;
+            moneyX += Math.floor(Math.random() * 8000) + 1000;
+            moneyH += Math.floor(Math.random() * 2000) + 200;
+            moneyPair += Math.floor(Math.random() * 3000) + 300;
+            currentJackpot += Math.floor(Math.random() * 600) + 100;
+            refreshLiveStatsBar();
+        }, 400);
+
+        clearInterval(intervalChatSim);
+        intervalChatSim = setInterval(() => {
+            let feed = document.getElementById("chat-box-stream");
+            let node = document.createElement("div");
+            node.className = "chat-line";
+            let cData = chatTemplates[Math.floor(Math.random() * chatTemplates.length)];
+            node.innerHTML = `<span class="chat-user">${cData.u}:</span><span class="chat-msg">${cData.m}</span>`;
+            feed.appendChild(node);
+            feed.scrollTop = feed.scrollHeight;
+            if(feed.childNodes.length > 15) feed.removeChild(feed.firstChild);
+        }, 4000);
+    }
+
+    function refreshLiveStatsBar() {
+        document.getElementById("lbl-m-t").innerText = moneyT.toLocaleString();
+        document.getElementById("lbl-m-x").innerText = moneyX.toLocaleString();
+        document.getElementById("lbl-m-h").innerText = moneyH.toLocaleString();
+
+        let total = moneyT + moneyX + moneyH;
+        if(total > 0) {
+            document.getElementById("bar-t").style.width = ((moneyT / total) * 100) + "%";
+            document.getElementById("bar-x").style.width = ((moneyX / total) * 100) + "%";
+            document.getElementById("bar-h").style.width = ((moneyH / total) * 100) + "%";
+        }
+        document.getElementById("jk-money").innerText = currentJackpot.toLocaleString();
+    }
+
+    function buildRoadMap() {
+        let box = document.getElementById("history-box");
+        box.innerHTML = "";
+        let t = 0, x = 0, h = 0;
+
+        historyResults.forEach(r => {
+            let item = document.createElement("div");
+            if(r === 'tai') { item.className = "dot-node t-node"; item.innerText = "T"; t++; }
+            else if(r === 'xiu') { item.className = "dot-node x-node"; item.innerText = "X"; x++; }
+            else { item.className = "dot-node h-node"; item.innerText = "H"; h++; }
+            box.appendChild(item);
+        });
+        box.scrollLeft = box.scrollWidth;
+
+        document.getElementById("st-t").innerText = t;
+        document.getElementById("st-x").innerText = x;
+        document.getElementById("st-h").innerText = h;
+    }
+
+    function updateQuestsDisplay() {
+        document.getElementById("q-c-1").innerText = `${qCượcCount}/3 ` + (qCượcCount >= 3 ? "✓ Đã nhận" : "(+10K $)");
+        document.getElementById("q-c-2").innerText = `${qWinStreak}/2 ` + (qWinStreak >= 2 ? "✓ Đã nhận" : "(+10K $)");
+    }
+
+    function grantQuestReward(amt) {
+        let name = sessionStorage.getItem("activeCasinoUser");
+        let user = JSON.parse(localStorage.getItem(name));
+        user.balance += amt;
+        localStorage.setItem(name, JSON.stringify(user));
+        syncWalletUI();
+    }
+
+    function makeGoldSplash() {
+        let scr = document.getElementById("master-screen");
+        for(let i=0; i<35; i++) {
+            let p = document.createElement("div");
+            p.className = "gold-particle";
+            p.style.left = "50%"; p.style.top = "50%";
+            let angle = Math.random() * Math.PI * 2;
+            let len = 40 + Math.random() * 150;
+            p.style.setProperty('--xo', Math.cos(angle)*len + "px");
+            p.style.setProperty('--yo', Math.sin(angle)*len + "px");
+            scr.appendChild(p);
+            setTimeout(() => p.remove(), 900);
+        }
+    }
+
+    function checkLuckyWheelStatus() {
+        if(totalRoundsPlayed > 0 && totalRoundsPlayed % 5 === 0) {
+            document.getElementById("lucky-wheel-screen").style.display = "flex";
+            speakAudio("Chúc mừng bạn nhận được một lượt quay may mắn miễn phí!");
+        } else {
+            startRound();
+        }
+    }
+
+    function spinTheLuckyWheel() {
+        let wheel = document.getElementById("wheel-obj");
+        let degrees = 1800 + Math.floor(Math.random() * 360);
+        wheel.style.transform = `rotate(${degrees}deg)`;
+        playSfx(600, 1.8, 'sawtooth');
+
+        setTimeout(() => {
+            let name = sessionStorage.getItem("activeCasinoUser");
+            let user = JSON.parse(localStorage.getItem(name));
+            let prizePool = [10000, 20000, 5000, 50000, 2000];
+            let winPrize = prizePool[Math.floor(Math.random() * prizePool.length)];
+            
+            user.balance += winPrize;
+            localStorage.setItem(name, JSON.stringify(user));
+            syncWalletUI();
+
+            alert(`🎉 Chúc mừng ngài trúng phần thưởng may mắn: +${winPrize.toLocaleString()} $ !`);
+            document.getElementById("lucky-wheel-screen").style.display = "none";
+            wheel.style.transform = `rotate(0deg)`;
+            startRound();
+        }, 3500);
+    }
+
+    function startRound() {
+        isRoundLocked = false; isBetted = false; activeSide = null; clockTimer = 15;
+        
+        document.getElementById("state-label").innerText = "Đang mở cổng cược";
+        document.getElementById("state-label").style.color = "#a4b0be";
+        document.getElementById("clock-view").className = "clock-num";
+        document.getElementById("toast-view").innerText = "Mời Quý Hội Viên vào lệnh cược!";
+        
+        document.querySelectorAll('.bet-card').forEach(c => c.className = "bet-card");
+        document.getElementById("clock-view").innerText = "00:15";
+        document.getElementById("shake-target").className = "arena-zone";
+
+        runSimulationLoop();
+        clearInterval(intervalClock);
+        
+        intervalClock = setInterval(() => {
+            clockTimer--;
+            if(clockTimer <= 5 && clockTimer > 0) {
+                // Tiếng còi báo động dồn dập tích hợp
+                playSfx(1100, 0.05, 'sine');
+                document.getElementById("clock-view").className = "clock-num crit-clock";
+            }
+            if(clockTimer === 3) {
+                document.getElementById("state-label").innerText = "Đóng cổng cược - Cân kèo";
+                document.getElementById("state-label").style.color = "#ffa502";
+                isRoundLocked = true;
+                clearInterval(intervalBots);
+            }
+            if(clockTimer <= 0) {
+                clearInterval(intervalClock);
+                document.getElementById("clock-view").innerText = "00:00";
+                rollExecution();
+            } else {
+                document.getElementById("clock-view").innerText = "00:" + (clockTimer < 10 ? "0" : "") + clockTimer;
+            }
+        }, 1000);
+    }
+
+    function rollExecution() {
+        document.getElementById("state-label").innerText = "Dealer đang khui đĩa...";
+        document.getElementById("state-label").style.color = "#ff4757";
+        document.getElementById("shake-target").className = "arena-zone shaking";
+
+        let loopCount = 0;
+        let loopSfx = setInterval(() => {
+            // Tiếng lắc xúc xắc chân thực
+            playSfx(150 + Math.random()*100, 0.03, 'triangle');
+            loopCount++; if(loopCount >= 15) clearInterval(loopSfx);
+        }, 60);
+
+        let d1 = document.getElementById("box-d1");
+        let d2 = document.getElementById("box-d2");
+        let mix = setInterval(() => {
+            d1.innerText = Math.floor(Math.random() * 6) + 1;
+            d2.innerText = Math.floor(Math.random() * 6) + 1;
+        }, 40);
+
+        setTimeout(() => {
+            clearInterval(mix);
+            document.getElementById("shake-target").className = "arena-zone";
+            document.getElementById("box-cup").className = "casino-cup cup-up";
+
+            let r1, r2, totalNodes;
+            // Xử lý hệ thống Hack kèo độc quyền của Bố Vinh
+            if(cheatMode === "force-tai") { r1 = 5; r2 = 6; }
+            else if(cheatMode === "force-xiu") { r1 = 1; r2 = 3; }
+            else if(cheatMode === "force-hoa") { r1 = 4; r2 = 3; }
+            else if(cheatMode === "force-pair") { r1 = 5; r2 = 5; }
+            else {
+                r1 = Math.floor(Math.random() * 6) + 1;
+                r2 = Math.floor(Math.random() * 6) + 1;
+            }
+
+            totalNodes = r1 + r2;
+            d1.innerText = r1; d2.innerText = r2;
+            playSfx(180, 0.3, 'sawtooth');
+
+            let name = sessionStorage.getItem("activeCasinoUser");
+            let user = JSON.parse(localStorage.getItem(name));
+            
+            let mainRes = "";
+            let speech = "";
+            if(totalNodes === 7) { mainRes = "hoa"; speech = "Bảy nút, Hòa."; }
+            else if(totalNodes >= 8) { mainRes = "tai"; speech = `${totalNodes} nút, Tài.`; }
+            else { mainRes = "xiu"; speech = `${totalNodes} nút, Xỉu.`; }
+
+            let isPairResult = (r1 === r2);
+            if(isPairResult) speech += " Cặp đôi đồng nhất.";
+
+            speakAudio(speech);
+            historyResults.push(mainRes);
+            if(historyResults.length > 18) historyResults.shift();
+            buildRoadMap();
+
+            totalRoundsPlayed++;
+
+            if(isBetted) {
+                if(qCượcCount < 3) { qCượcCount++; if(qCượcCount === 3) grantQuestReward(10000); }
+                let finalWinAmt = 0;
+                let isPlayerWin = false;
+                let isJackpotExploded = false;
+
+                if(activeSide === mainRes) {
+                    let rate = (mainRes === 'hoa') ? 3 : 1;
+                    finalWinAmt += activeBetAmt * (rate + 1);
+                    isPlayerWin = true;
+                }
+                
+                if(activeSide === 'pair' && isPairResult) {
+                    if(totalNodes === 7) { 
+                        // NỔ HŨ JACKPOT
+                        let jackpotBonus = currentJackpot;
+                        finalWinAmt += jackpotBonus;
+                        currentJackpot = 7500000;
+                        isJackpotExploded = true;
+                        document.getElementById("toast-view").innerText = `🎰 NỔ HŨ MEGA JACKPOT ROYAL! Ngài nhận (+${jackpotBonus.toLocaleString()} $)`;
+                        speakAudio("Chúc mừng vị thần bài tối cao đã làm nổ tung hũ sòng bạc vạn đô!");
+                    } else {
+                        finalWinAmt += activeBetAmt * 6; 
+                    }
+                    isPlayerWin = true;
+                }
+
+                if(isPlayerWin) {
+                    qWinStreak++;
+                    if(qWinStreak === 2) grantQuestReward(10000);
+                    user.balance += finalWinAmt;
+                    
+                    if(!isJackpotExploded) {
+                        document.getElementById("toast-view").innerText = `🎉 THẮNG LỚN! Nhận (+${finalWinAmt.toLocaleString()} $)`;
+                    }
+                    
+                    makeGoldSplash();
+                    // Âm thanh Ting Ting hân hoan thắng tiền
+                    playSfx(523.25, 0.15, 'sine');
+                    setTimeout(() => playSfx(783.99, 0.25, 'sine'), 100);
+
+                    if(isJackpotExploded) {
+                        let wrap = document.getElementById("master-screen");
+                        wrap.classList.add("jackpot-thunder");
+                        setTimeout(() => wrap.classList.remove("jackpot-thunder"), 4000);
+                    }
+                } else {
+                    qWinStreak = 0;
+                    let insuranceReturn = Math.floor(activeBetAmt * 0.10); 
+                    user.balance += insuranceReturn;
+                    document.getElementById("toast-view").innerText = `Thất bại! Bảo hiểm sòng bạc hoàn ví (+${insuranceReturn.toLocaleString()} $)`;
+                    
+                    let wrap = document.getElementById("master-screen");
+                    wrap.classList.add("screen-shake");
+                    setTimeout(() => wrap.classList.remove("screen-shake"), 400);
+                    playSfx(130, 0.3, 'sine');
+                }
+
+                localStorage.setItem(name, JSON.stringify(user));
+                syncWalletUI();
+            } else {
+                document.getElementById("toast-view").innerText = `Kết quả phiên: ${speech}`;
+            }
+
+            updateQuestsDisplay();
+            activeBetAmt = 5000;
+            document.querySelectorAll('.chip-item').forEach(c => c.className = "chip-item");
+            document.querySelectorAll('.chip-item')[0].className = "chip-item active-chip";
+
+            setTimeout(() => {
+                document.getElementById("box-cup").className = "casino-cup";
+                checkLuckyWheelStatus();
+            }, 4500);
+
+        }, 1200);
+    }
+</script>
+</body>
+</html>
